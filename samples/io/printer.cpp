@@ -14,6 +14,5 @@ int main() {
     printer.Print(value);
   }
   printer.End(); // print right_border
-  // [ 1, 2, 3, 4, 5 ]
   return 0;
 }

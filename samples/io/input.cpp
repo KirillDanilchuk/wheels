@@ -5,8 +5,8 @@
 #include <wheels/io/io.hpp>
 
 int main() {
-  auto value = wheels::io::Input<int>("Enter first value:");
-  wheels::io::PrintLine(value);
+  using namespace wheels::io;
+  auto value = Input<int>("Enter value:");
+  PrintLine("Value:", value);
   return 0;
 }
-
