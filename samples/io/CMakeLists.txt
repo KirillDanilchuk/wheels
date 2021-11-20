@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 3.14)
 project(io_sample)
 
-add_executable(${PROJECT_NAME} main.cpp)
-target_link_libraries(${PROJECT_NAME} wheels)
+link_libraries(wheels)
+
+add_executable(input_sample input.cpp)
+add_executable(output_sample output.cpp)
+add_executable(printer_sample printer.cpp)
+
+

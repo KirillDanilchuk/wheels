@@ -5,4 +5,4 @@ project(wheels)
 include(cmake/CompileOption.cmake)
 
 add_subdirectory(wheels)
-#add_subdirectory(samples)
+add_subdirectory(samples)

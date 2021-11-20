@@ -4,16 +4,6 @@
 
 #pragma once
 
-#include <iostream>
-
-namespace wheels::io {
-
-template <typename ReturnType, typename... Args>
-ReturnType Input(Args&& ... args) {
-  ReturnType result;
-  std::cout << (args << ...);
-  std::cin >> result;
-  return result;
-}
-
-}
+#include <wheels/io/output.hpp>
+#include <wheels/io/input.hpp>
+#include <wheels/io/PrinterWithDelimiter.hpp>
