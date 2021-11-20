@@ -25,7 +25,7 @@ int main() {
 }
 ```
 Output:
-```powershell
+```
 Enter value:42
 Value:42
 ```
@@ -41,7 +41,7 @@ int main() {
 }
 ```
 Output:
-```powershell
+```
 ab1number
 1, 2, 3
 ```
@@ -63,7 +63,7 @@ int main() {
 }
 ```
 Output:
-```powershell
+```
 [ 1 | 2 | 3 | 4 | 5 ]
 ```
 ## Integration
