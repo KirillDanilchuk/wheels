@@ -6,7 +6,7 @@
 
 #include <wheels/io/io.hpp>
 
-namespace wheels::io {
+namespace wheels {
 
 class PrinterWithDelimiter {
  public:
@@ -25,32 +25,32 @@ class PrinterWithDelimiter {
 
   template <typename... Args>
   void PrintAll(Args&&... args) {
-    wheels::io::Print(left_border_);
-    wheels::io::PrintWithDelimiter(delimiter_, std::forward<Args>(args)...);
-    wheels::io::Print(right_border_);
+    wheels::Print(left_border_);
+    wheels::PrintWithDelimiter(delimiter_, std::forward<Args>(args)...);
+    wheels::Print(right_border_);
     Reset();
   }
 
   template <typename... Args>
   void PrintLineAll(Args&&... args) {
     PrintAll(std::forward<Args>(args)...);
-    wheels::io::FlushAndNewLine();
+    wheels::FlushAndNewLine();
   }
 
   template <typename T>
   void Print(T&& value) {
     if (is_first_print_) {
-      wheels::io::Print(left_border_);
-      wheels::io::Print(value);
+      wheels::Print(left_border_);
+      wheels::Print(value);
       is_first_print_ = false;
     } else {
-      wheels::io::Print(delimiter_);
-      wheels::io::Print(value);
+      wheels::Print(delimiter_);
+      wheels::Print(value);
     }
   }
 
   void End() {
-    wheels::io::Print(right_border_);
+    wheels::Print(right_border_);
     Reset();
   }
 

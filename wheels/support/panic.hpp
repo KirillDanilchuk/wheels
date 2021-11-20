@@ -3,12 +3,13 @@
 //
 
 #include <wheels/support/SourceLocation.hpp>
+#include <wheels/support/StringBuiler.hpp>
 
-namespace wheels::support::detail {
-void Panic(SourceLocation where, std::string_view error);
+namespace wheels::detail {
+void Panic(SourceLocation where, const std::string& error);
 }
 
 #define WHEELS_PANIC(error) \
 do {                            \
-::wheels::support::detail::Panic(WHEELS_HERE, error); \
+::wheels::detail::Panic(WHEELS_HERE, ::wheels::StringBuilder() << error); \
 } while (false)

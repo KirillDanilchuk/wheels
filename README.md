@@ -18,7 +18,7 @@ Input/output component to simplify the work with the console
 #include <wheels/io/io.hpp>
 
 int main() {
-  using namespace wheels::io;
+  using namespace wheels;
   auto value = Input<int>("Enter value:");
   PrintLine("Value:", value);
   return 0;
@@ -35,8 +35,8 @@ Value:42
 #include <wheels/io/io.hpp>
 
 int main() {
-  wheels::io::PrintLine('a', 'b', 1, "number");
-  wheels::io::PrintLineWithDelimiter(", ", 1, 2, 3);
+  wheels::PrintLine('a', 'b', 1, "number");
+  wheels::PrintLineWithDelimiter(", ", 1, 2, 3);
   return 0;
 }
 ```
@@ -48,23 +48,79 @@ ab1number
 [Printer with delimiter](samples/io/printer.cpp)
 ```cpp
 #include <wheels/io/io.hpp>
-#include <vector>
 
 int main() {
   std::vector ints{1, 2, 3, 4, 5};
-  wheels::io::PrinterWithDelimiter printer(/*left_border=*/"[ ",
+  wheels::PrinterWithDelimiter printer(/*left_border=*/"[ ",
       /*delimiter=*/" | ",
       /*right_border=*/" ]");
   for (auto&& value : ints) {
     printer.Print(value);
   }
   printer.End(); // print right_border
+
+  wheels::FlushAndNewLine();
+
+  wheels::PrinterWithDelimiter simple_printer(/*delimiter=*/", ");
+  simple_printer.PrintLineAll("Begin", 42, "End");
   return 0;
 }
 ```
 Output:
 ```
 [ 1 | 2 | 3 | 4 | 5 ]
+Begin, 42, End
+```
+
+### [support](wheels/support)
+Support component to simplify the work
+
+#### [Samples](samples/support)
+[panic](samples/support/panic.cpp)
+
+Abort with message builder
+
+```cpp
+//
+// Created by Kirill Danilchuk <kirill.danilchuk01@gmail.com> on 20/11/2021.
+//
+
+#include <wheels/support/panic.hpp>
+
+int main(int argc, char** argv) {
+WHEELS_PANIC("Error message 1 " << "Error message 2 " << 3);
+return 0;
+}
+```
+Output:
+```
+Panicked at /Users/kirilldanilchuk/Projects/CLionProjects/wheels/samples/support/panic.cpp:int main(int, char **)[Line 8]: Error message 1 Error message 2 3
+
+Process finished with exit code 134 (interrupted by signal 6: SIGABRT)
+
+```
+[assert](samples/support/assert.cpp)
+```cpp
+//
+// Created by Kirill Danilchuk <kirill.danilchuk01@gmail.com> on 20/11/2021.
+//
+
+#include <wheels/support/assert.hpp>
+#include <wheels/io/io.hpp>
+
+int main() {
+  constexpr int SUPER_VALUE = 42;
+  const auto value = wheels::Input<int>("Enter value:");
+  WHEELS_ASSERT(value < SUPER_VALUE, "Too large value");
+  return 0;
+}
+```
+Output:
+```
+Enter value:43
+Panicked at /Users/kirilldanilchuk/Projects/CLionProjects/wheels/samples/support/assert.cpp:int main()[Line 11]: Assertion 'value < SUPER_VALUE' failed: Too large value
+
+Process finished with exit code 134 (interrupted by signal 6: SIGABRT)
 ```
 ## Integration
 ### CMake

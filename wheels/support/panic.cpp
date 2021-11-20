@@ -5,8 +5,8 @@
 #include <wheels/support/panic.hpp>
 #include <iostream>
 
-namespace wheels::support::detail {
-void Panic(SourceLocation where, std::string_view error) {
+namespace wheels::detail {
+void Panic(SourceLocation where, const std::string& error) {
   std::cerr << "Panicked at " << where << ": " << error << std::endl;
   std::abort();
 }

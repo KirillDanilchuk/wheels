@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-namespace wheels::io {
+namespace wheels {
 
 void FlushAndNewLine() {
   std::cout << std::endl;

@@ -5,7 +5,7 @@
 #include <wheels/io/io.hpp>
 
 int main() {
-  using namespace wheels::io;
+  using namespace wheels;
   auto value = Input<int>("Enter value:");
   PrintLine("Value:", value);
   return 0;

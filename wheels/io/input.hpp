@@ -7,7 +7,7 @@
 #include <iostream>
 #include <wheels/io/output.hpp>
 
-namespace wheels::io {
+namespace wheels {
 
 template <typename ReturnType>
 ReturnType Input() {
