@@ -122,6 +122,44 @@ Panicked at /Users/kirilldanilchuk/Projects/CLionProjects/wheels/samples/support
 
 Process finished with exit code 134 (interrupted by signal 6: SIGABRT)
 ```
+
+[Pimpl](tests/pimpl)
+
+["Pointer to implementation" or "pImpl" is a C++ programming technique that removes implementation details of a class from its object representation by placing them in a separate class, accessed through an opaque pointer.](https://en.cppreference.com/w/cpp/language/pimpl)
+
+This is the fast pimpl implement.
+```cpp
+// PublicClass.hpp
+#include <wheels/support/Pimpl.hpp>
+
+class PrivateClass;
+
+class PublicClass {
+  PublicClass(int value);
+  ~PublicClass(); //implement to cpp file
+  Data GetData();
+  
+  private:
+  Pimpl<PrivateClass, 32, 32> private_class_;
+};
+```
+```cpp
+// PublicClass.cpp
+
+#include "PublicClass.hpp"
+#include <PrivateClass.hpp>
+
+PublicClass::PublicClass(int value) : private_class_{value} {
+  // pass
+}
+
+PublicClass::~PublicClass() = default;
+
+auto PublicClass::GetData() -> Data {
+  return ToData(private_class->GetValue());
+}
+```
+
 ## Integration
 ### CMake
 #### Embedded (FetchContent)
