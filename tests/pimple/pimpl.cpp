@@ -2,7 +2,7 @@
 // Created by Kirill Danilchuk <kirill.danilchuk01@gmail.com> on 03/12/2021.
 //
 
-#include <tests/pimple/pimple.hpp>
+#include "pimpl.hpp"
 #include <tests/pimple/secret_library.hpp>
 
 PublicClass::PublicClass() : pimpl_(42) {

@@ -17,5 +17,5 @@ class PublicClass {
   int GetValue();
 
  private:
-  Pimpl<SecretClass, 4, 4> pimpl_;
+  Pimpl<SecretClass, /*kSize=*/4, /*kAligned=*/4> pimpl_;
 };

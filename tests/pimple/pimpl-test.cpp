@@ -3,7 +3,7 @@
 //
 
 #include <gtest/gtest.h>
-#include <tests/pimple/pimple.hpp>
+#include "pimpl.hpp"
 
 TEST(Pimple, JustWork) {
 #ifdef SECRET
