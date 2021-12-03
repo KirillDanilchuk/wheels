@@ -132,13 +132,14 @@ This is the fast pimpl implementation.
 // PublicClass.hpp
 #include <wheels/support/Pimpl.hpp>
 
+class PrivateClass;
+
 class PublicClass {
   PublicClass(int value);
   ~PublicClass(); //implement to cpp file
   Data GetData();
   
   private:
-  class PrivateClass;
   Pimpl<PrivateClass, 32, 32> private_class_;
 };
 ```
