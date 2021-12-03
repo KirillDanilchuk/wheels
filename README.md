@@ -178,4 +178,12 @@ FetchContent_MakeAvailable(wheels)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE wheels)
 ```
+
 Example project how to use library https://github.com/KirillDanilchuk/wheels-cmake-test
+
+#### Enable samples and/or tests
+
+To enable samples and/or tests in 
+`Preferences | Build, Execution, Deployment | CMake | CMake options`
+add `-DENABLE_TESTS=ON -DENABLE_SAMPLES=ON`
+![enable_tests_and_samples](pictures/enable_tests_and_samples.png)
