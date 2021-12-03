@@ -11,8 +11,10 @@ class SecretClass {
   explicit SecretClass(int value) : value_{value} {
     // pass
   }
+
   SecretClass(SecretClass&&) = default;
   SecretClass(const SecretClass&) = default;
+
   void SetValue(int value) {
     value_ = value;
   }

@@ -3,7 +3,7 @@
 //
 
 #include "pimpl.hpp"
-#include <tests/pimple/secret_library.hpp>
+#include <tests/pimpl/secret_library.hpp>
 
 PublicClass::PublicClass() : pimpl_(42) {
   // pass

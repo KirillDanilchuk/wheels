@@ -6,8 +6,6 @@
 
 #include <wheels/support/Pimple.hpp>
 
-class SecretClass;
-
 class PublicClass {
  public:
   PublicClass();
@@ -17,5 +15,6 @@ class PublicClass {
   int GetValue();
 
  private:
+  class SecretClass;
   Pimpl<SecretClass, /*kSize=*/4, /*kAligned=*/4> pimpl_;
 };
