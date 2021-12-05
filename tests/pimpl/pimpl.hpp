@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <wheels/support/Pimple.hpp>
+#include <wheels/support/Pimpl.hpp>
 
 class SecretClass;
 
@@ -17,5 +17,5 @@ class PublicClass {
   int GetValue();
 
  private:
-  Pimpl<SecretClass, /*kSize=*/4, /*kAligned=*/4> pimpl_;
+  wheels::Pimpl<SecretClass, /*kSize=*/4, /*kAligned=*/4> pimpl_;
 };

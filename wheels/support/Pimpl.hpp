@@ -6,6 +6,8 @@
 #include <type_traits>
 #include <new>
 
+namespace wheels {
+
 template <typename T, size_t kSize, size_t kAlignment>
 class Pimpl {
  public:
@@ -72,3 +74,5 @@ class Pimpl {
  private:
   std::aligned_storage_t<kSize, kAlignment> storage_;
 };
+
+}
