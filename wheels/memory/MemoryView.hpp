@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdlib>
+#include <string_view>
 #include <wheels/support/assert.hpp>
 
 class MemoryView {
@@ -37,6 +38,17 @@ class MemoryView {
 
   [[nodiscard]] bool NotEmpty() const noexcept {
     return !Empty();
+  }
+
+  MemoryView& operator+=(size_t offset) noexcept {
+    WHEELS_ASSERT(offset <= size_, "Out of bounds");
+    begin_ += offset;
+    size_ -= offset;
+    return *this;
+  }
+
+  [[nodiscard]] std::string_view AsStringView() const noexcept {
+    return {begin_, size_};
   }
 
  private:
