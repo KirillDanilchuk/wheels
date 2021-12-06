@@ -10,9 +10,9 @@
 namespace wheels {
 class ConsoleWriter : public IWriter {
  public:
-  Result<size_t> Write(MemoryView view) override {
-    Print(view.AsStringView());
-    return {view.Size()};
+  Result<size_t> Write(const std::string& view) override {
+    Print(view);
+    return view.size();
   }
 };
 

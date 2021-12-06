@@ -12,15 +12,6 @@ namespace wheels {
 
 class ConsoleReader : public IReader {
  public:
-  Result<size_t> Read(MemoryView destination) override {
-    auto buffer = Input<std::string>();
-    size_t size = std::min(buffer.size(), destination.Size());
-    for (size_t i = 0; i < size; ++i) {
-      destination[i] = buffer[i];
-    }
-    return {size};
-  }
-
   std::string Read() override {
     return Input<std::string>();
   }

@@ -10,7 +10,7 @@
 namespace wheels {
 class IWriter {
  public:
-  virtual Result<size_t> Write(MemoryView view) = 0;
+  virtual Result<size_t> Write(const std::string& view) = 0;
   virtual ~IWriter() = default;
 };
 

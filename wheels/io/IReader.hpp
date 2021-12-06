@@ -13,7 +13,6 @@ namespace wheels {
 
 class IReader {
  public:
-  virtual Result<size_t> Read(MemoryView destination) = 0;
   virtual std::string Read() = 0;
   virtual ~IReader() = default;
 };
