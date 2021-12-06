@@ -13,7 +13,9 @@ namespace wheels {
 class ConsoleReader : public IReader {
  public:
   std::string Read() override {
-    return Input<std::string>();
+    std::string buffer;
+    std::getline(std::cin, buffer);
+    return buffer;
   }
 };
 
