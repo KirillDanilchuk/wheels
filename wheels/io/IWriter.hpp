@@ -4,19 +4,15 @@
 
 #pragma once
 
-#include <cstdlib>
 #include <wheels/memory/MemoryView.hpp>
 #include <wheels/result/Result.hpp>
 
-namespace wheels {
 
-class IReader {
+class IWriter {
  public:
-  virtual Result<size_t> Read(MemoryView buffer) = 0;
-  virtual ~IReader() = default;
+  virtual Result<size_t> Write(MemoryView view) = 0;
+  virtual ~IWriter() = default;
 };
-
-}
 
 
 
