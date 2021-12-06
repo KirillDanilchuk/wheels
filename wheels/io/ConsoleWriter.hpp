@@ -11,7 +11,7 @@ namespace wheels {
 class ConsoleWriter : public IWriter {
  public:
   Result<size_t> Write(const std::string& view) override {
-    Print(view);
+    PrintLine(view);
     return view.size();
   }
 };
