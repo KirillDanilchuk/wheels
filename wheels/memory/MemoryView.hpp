@@ -15,6 +15,11 @@ class MemoryView {
     // pass
   }
 
+  char& operator[](size_t i) noexcept {
+    WHEELS_ASSERT(i < Size(), "Out of bounds");
+    return Begin()[i];
+  }
+
   [[nodiscard]] char* Begin() noexcept {
     return begin_;
   }

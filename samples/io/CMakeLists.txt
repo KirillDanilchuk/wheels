@@ -6,7 +6,7 @@ link_libraries(wheels)
 add_executable(input_sample input.cpp)
 add_executable(output_sample output.cpp)
 add_executable(printer_sample printer.cpp)
-
+add_executable(console_reader_and_writer console_reader_and_writer.cpp)
 add_executable(pretty_std_sample pretty_std.cpp)
 
 

@@ -7,12 +7,11 @@
 #include <wheels/memory/MemoryView.hpp>
 #include <wheels/result/Result.hpp>
 
-
+namespace wheels {
 class IWriter {
  public:
   virtual Result<size_t> Write(MemoryView view) = 0;
   virtual ~IWriter() = default;
 };
 
-
-
+}

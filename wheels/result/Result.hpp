@@ -55,6 +55,10 @@ class Result {
     return is_construct_;
   }
 
+  T Value() {
+    return storage_.Ref();
+  }
+
   ~Result() {
     if (HasValue()) {
       storage_.Destroy();
