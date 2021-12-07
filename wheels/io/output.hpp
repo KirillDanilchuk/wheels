@@ -8,7 +8,7 @@
 
 namespace wheels {
 
-void FlushAndNewLine() {
+inline void FlushAndNewLine() {
   std::cout << std::endl;
 }
 
