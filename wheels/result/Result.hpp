@@ -8,6 +8,7 @@
 #include <exception>
 
 namespace detail {
+
 template <typename T>
 class ValueStorage {
   using Storage = std::aligned_storage_t<sizeof(T), alignof(T)>;
@@ -33,6 +34,7 @@ class ValueStorage {
  private:
   Storage storage_;
 };
+
 }
 
 template <typename T>
