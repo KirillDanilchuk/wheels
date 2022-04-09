@@ -8,8 +8,8 @@
 namespace wheels {
 
 int GetRandomValue(int left, int right) {
-  std::random_device random_device;
-  std::mt19937 generator(random_device());
+  static std::random_device random_device;
+  static std::mt19937 generator(random_device());
   std::uniform_int_distribution<> distribution{left, right};
   return distribution(generator);
 }
