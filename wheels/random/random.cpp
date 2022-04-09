@@ -7,11 +7,21 @@
 
 namespace wheels {
 
-int GetRandomValue(int left, int right) {
+std::mt19937& GetCurrentGenerator() {
   static std::random_device random_device;
   static std::mt19937 generator(random_device());
+  return generator;
+}
+
+int GetRandomValue(int left, int right) {
   std::uniform_int_distribution<> distribution{left, right};
-  return distribution(generator);
+  return distribution(GetCurrentGenerator());
+}
+
+std::string MakeRandomString(size_t size) {
+  return MakeRandomContainer<std::string>(size,
+                                          std::numeric_limits<char>::min(),
+                                          std::numeric_limits<char>::max());
 }
 
 }
