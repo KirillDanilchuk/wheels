@@ -195,11 +195,16 @@ int main() {
   auto future{wheels::ViaChannel<int, std::vector<int>>(GenerateSequenceValues,
                                                         CreateVector)};
   auto vector{future.GetOptional().value()};
+  std::cout << "Values: ";
   for (auto&& value : vector) {
     std::cout << value << " ";
   }
   std::cout << std::endl;
 }
+```
+
+```c++
+Values: 0 1 2 3 4 5 6 7 8 
 ```
 
 ## Integration
