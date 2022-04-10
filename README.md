@@ -170,17 +170,22 @@ Channel (aka Pipe) allows you pass values through threads
 #include <wheels/concurrency/channel.hpp>
 #include <wheels/io/pretty_std.hpp>
 #include <vector>
+#include <wheels/time/Timer.hpp>
 #include <iostream>
 
 void GenerateSequenceValues(wheels::Promise<int> promise) {
+  wheels::Timer<std::chrono::nanoseconds> timer;
   for (int i = 0; i < 10; ++i) {
     promise.Put(i);
   }
+  std::cout << "Producer elapsed: " << timer.Elapsed() << "ns" << std::endl;
   promise.CloseChannel();
 }
 
 void CreateVector(wheels::Future<int> future,
                   wheels::Promise<std::vector<int>> promise) {
+  wheels::Timer<std::chrono::nanoseconds> timer;
+  std::this_thread::sleep_for(std::chrono::milliseconds(3000));
   std::vector<int> result;
   while (true) {
     auto optional{future.Get()};
@@ -189,6 +194,7 @@ void CreateVector(wheels::Future<int> future,
     }
     result.push_back(optional.value());
   }
+  std::cout << "Consumer elapsed: " << timer.Elapsed() << "ns" << std::endl;
   promise.Put(std::move(result));
 }
 
@@ -201,6 +207,8 @@ int main() {
 ```
 
 ```c++
+Producer elapsed: 21041ns
+Consumer elapsed: 3005132042ns
 [size:10, capacity:16] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 ```
 

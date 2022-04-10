@@ -23,10 +23,6 @@ class Future {
   friend class Channel<T>;
 
  public:
-  ~Future() {
-    CloseChannel();
-  }
-
   void CloseChannel() {
     channel_->Close();
   }
@@ -60,10 +56,6 @@ class Promise {
   friend class Channel<T>;
 
  public:
-  ~Promise() {
-    CloseChannel();
-  }
-
   void CloseChannel() {
     channel_->Close();
   }
