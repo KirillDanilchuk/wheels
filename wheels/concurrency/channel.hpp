@@ -8,6 +8,7 @@
 #include <optional>
 #include <thread>
 #include <memory>
+#include <deque>
 #include <functional>
 
 namespace wheels {
@@ -22,19 +23,22 @@ class Future {
   friend class Channel<T>;
 
  public:
+  ~Future() {
+    CloseChannel();
+  }
+
   void CloseChannel() {
     channel_->Close();
   }
 
   std::optional<T> Get() {
     std::unique_lock lock{channel_->mutex_};
-    while (!channel_->value_.has_value() && !channel_->is_close_) {
-      channel_->value_ready_or_close_.wait(lock);
+    while (channel_->queue_.empty() && !channel_->is_close_) {
+      channel_->queue_not_empty_or_close_.wait(lock);
     }
-    if (channel_->value_.has_value()) {
-      T result = std::move(channel_->value_.value());
-      channel_->value_ = std::nullopt;
-      channel_->value_empty_or_close_.notify_one();
+    if (!channel_->queue_.empty()) {
+      T result = std::move(channel_->queue_.back());
+      channel_->queue_.pop_back();
       return result;
     } else {
       return std::nullopt;
@@ -56,6 +60,10 @@ class Promise {
   friend class Channel<T>;
 
  public:
+  ~Promise() {
+    CloseChannel();
+  }
+
   void CloseChannel() {
     channel_->Close();
   }
@@ -63,14 +71,11 @@ class Promise {
   template <typename U>
   bool Put(U&& value) {
     std::unique_lock lock{channel_->mutex_};
-    while (channel_->value_.has_value() && !channel_->is_close_) {
-      channel_->value_empty_or_close_.wait(lock);
-    }
     if (channel_->is_close_) {
       return false;
     }
-    channel_->value_ = std::forward<U>(value);
-    channel_->value_ready_or_close_.notify_one();
+    channel_->queue_.push_front(std::forward<U>(value));
+    channel_->queue_not_empty_or_close_.notify_one();
     return true;
   }
 
@@ -93,8 +98,7 @@ class Channel : public std::enable_shared_from_this<Channel<T>> {
   void Close() {
     std::lock_guard guard{mutex_};
     is_close_ = true;
-    value_empty_or_close_.notify_one();
-    value_ready_or_close_.notify_one();
+    queue_not_empty_or_close_.notify_one();
   }
 
   Future<T> MakeFuture() {
@@ -106,11 +110,10 @@ class Channel : public std::enable_shared_from_this<Channel<T>> {
   }
 
  private:
-  std::optional<T> value_;
+  std::deque<T> queue_;
   bool is_close_{false};
   std::mutex mutex_;
-  std::condition_variable value_ready_or_close_;
-  std::condition_variable value_empty_or_close_;
+  std::condition_variable queue_not_empty_or_close_;
 };
 
 struct Unit {};
