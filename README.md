@@ -201,7 +201,7 @@ int main() {
 ```
 
 ```c++
-[size:9, capacity:16] {0, 1, 2, 3, 4, 5, 6, 7, 8}
+[size:10, capacity:16] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
 ```
 
 ## Integration
