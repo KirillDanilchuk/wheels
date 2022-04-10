@@ -167,44 +167,45 @@ Concurrency components
 [Channel](samples/concurrency/channel.cpp)
 Channel (aka Pipe) allows you pass values through threads
 ```c++
+//
+// Created by Kirill Danilchuk <kirill.danilchuk01@gmail.com> on 10/04/2022.
+//
+
 #include <wheels/concurrency/channel.hpp>
+#include <wheels/io/pretty_std.hpp>
 #include <vector>
 #include <iostream>
 
 void GenerateSequenceValues(wheels::Promise<int> promise) {
-  for (int i = 0; i < 10; ++i) {
-    promise.Put(i);
-  }
-  promise.CloseChannel();
+for (int i = 0; i < 10; ++i) {
+promise.Put(i);
+}
+promise.CloseChannel();
 }
 
 void CreateVector(wheels::Future<int> future,
-                  wheels::Promise<std::vector<int>> promise) {
-  std::vector<int> result;
-  while (true) {
-    auto optional{future.GetOptional()};
-    if (!optional.has_value()) {
-      break;
-    }
-    result.push_back(optional.value());
-  }
-  promise.Put(std::move(result));
+wheels::Promise<std::vector<int>> promise) {
+std::vector<int> result;
+while (true) {
+auto optional{future.GetOptional()};
+if (!optional.has_value()) {
+break;
+}
+result.push_back(optional.value());
+}
+promise.Put(std::move(result));
 }
 
 int main() {
-  auto future{wheels::ViaChannel<int, std::vector<int>>(GenerateSequenceValues,
-                                                        CreateVector)};
-  auto vector{future.GetOptional().value()};
-  std::cout << "Values: ";
-  for (auto&& value : vector) {
-    std::cout << value << " ";
-  }
-  std::cout << std::endl;
+auto future{wheels::ViaChannel<int, std::vector<int>>(GenerateSequenceValues,
+CreateVector)};
+auto vector{future.GetOptional().value()};
+std::cout << vector << std::endl;
 }
 ```
 
 ```c++
-Values: 0 1 2 3 4 5 6 7 8 
+[size:9, capacity:16] {0, 1, 2, 3, 4, 5, 6, 7, 8}
 ```
 
 ## Integration

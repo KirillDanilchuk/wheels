@@ -3,6 +3,7 @@
 //
 
 #include <wheels/concurrency/channel.hpp>
+#include <wheels/io/pretty_std.hpp>
 #include <vector>
 #include <iostream>
 
@@ -30,9 +31,5 @@ int main() {
   auto future{wheels::ViaChannel<int, std::vector<int>>(GenerateSequenceValues,
                                                         CreateVector)};
   auto vector{future.GetOptional().value()};
-  std::cout << "Values: ";
-  for (auto&& value : vector) {
-    std::cout << value << " ";
-  }
-  std::cout << std::endl;
+  std::cout << vector << std::endl;
 }
