@@ -7,6 +7,7 @@
 #include <chrono>
 
 namespace wheels {
+template <typename TimeType = std::chrono::milliseconds>
 class Timer {
  public:
   Timer()
@@ -17,7 +18,7 @@ class Timer {
   size_t Elapsed() {
     auto end = std::chrono::steady_clock::now();
     using std::chrono::duration_cast;
-    return duration_cast<std::chrono::milliseconds>(end - begin_).count();
+    return duration_cast<TimeType>(end - begin_).count();
   }
 
  private:
