@@ -31,13 +31,14 @@ class Future {
     while (!channel_->value_.has_value() && !channel_->is_close_) {
       channel_->value_ready_or_close_.wait(lock);
     }
-    if (channel_->is_close_) {
+    if (channel_->value_.has_value()) {
+      T result = std::move(channel_->value_.value());
+      channel_->value_ = std::nullopt;
+      channel_->value_empty_or_close_.notify_one();
+      return result;
+    } else {
       return std::nullopt;
     }
-    T result = std::move(channel_->value_.value());
-    channel_->value_ = std::nullopt;
-    channel_->value_empty_or_close_.notify_one();
-    return result;
   }
 
  private:
