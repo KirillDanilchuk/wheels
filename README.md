@@ -165,7 +165,7 @@ Concurrency components
 
 #### [Samples](samples/concurrency)
 [Channel](samples/concurrency/channel.cpp)
-Channel (aka Pipe) allows you pass values via threads
+Channel (aka Pipe) allows you pass values through threads
 ```c++
 #include <wheels/concurrency/channel.hpp>
 #include <vector>
