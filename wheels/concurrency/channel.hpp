@@ -87,6 +87,10 @@ class Channel : public std::enable_shared_from_this<Channel<T>> {
   friend class Promise<T>;
 
  public:
+  static ChannelPtr<T> Create() {
+    return std::make_shared<Channel<T>>();
+  }
+
   void Close() {
     std::lock_guard guard{mutex_};
     is_close_ = true;
@@ -110,19 +114,14 @@ class Channel : public std::enable_shared_from_this<Channel<T>> {
 
 struct Unit {};
 
-template <typename T>
-ChannelPtr<T> MakeChannel() {
-  return std::make_shared<Channel<T>>();
-}
-
 template <typename T, typename Result>
 Future<Result> ViaChannel(std::function<void(Promise<T>)> producer,
                           std::function<void(Future<T>,
                                              Promise<Result>)> consumer) {
-  auto shared_channel = MakeChannel<T>();
+  auto shared_channel = Channel<T>::Create();
   std::thread{producer, shared_channel->MakePromise()}.detach();
 
-  auto result_channel = MakeChannel<Result>();
+  auto result_channel = Channel<Result>::Create();
   std::thread{
       consumer, shared_channel->MakeFuture(),
       result_channel->MakePromise()
