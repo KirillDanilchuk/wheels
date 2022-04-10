@@ -167,10 +167,6 @@ Concurrency components
 [Channel](samples/concurrency/channel.cpp)
 Channel (aka Pipe) allows you pass values through threads
 ```c++
-//
-// Created by Kirill Danilchuk <kirill.danilchuk01@gmail.com> on 10/04/2022.
-//
-
 #include <wheels/concurrency/channel.hpp>
 #include <wheels/io/pretty_std.hpp>
 #include <vector>
