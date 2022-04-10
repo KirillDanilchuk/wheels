@@ -17,7 +17,7 @@ void CreateVector(wheels::Future<int> future,
                   wheels::Promise<std::vector<int>> promise) {
   std::vector<int> result;
   while (true) {
-    auto optional = future.GetOptional();
+    auto optional{future.GetOptional()};
     if (!optional.has_value()) {
       break;
     }
@@ -27,8 +27,9 @@ void CreateVector(wheels::Future<int> future,
 }
 
 TEST(Channel, SequenceValues) {
-  auto future = wheels::ViaChannel<int, std::vector<int>>(GenerateSequenceValues, CreateVector);
-  auto vector = future.GetOptional().value();
+  auto future{wheels::ViaChannel<int, std::vector<int>>(GenerateSequenceValues,
+                                                        CreateVector)};
+  auto vector{future.GetOptional().value()};
   for (size_t i = 0; i < vector.size(); ++i) {
     ASSERT_EQ(vector[i], i);
   }
