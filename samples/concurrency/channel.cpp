@@ -30,6 +30,7 @@ int main() {
   auto future{wheels::ViaChannel<int, std::vector<int>>(GenerateSequenceValues,
                                                         CreateVector)};
   auto vector{future.GetOptional().value()};
+  std::cout << "Values: ";
   for (auto&& value : vector) {
     std::cout << value << " ";
   }
