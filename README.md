@@ -183,7 +183,7 @@ void CreateVector(wheels::Future<int> future,
                   wheels::Promise<std::vector<int>> promise) {
   std::vector<int> result;
   while (true) {
-    auto optional{future.GetOptional()};
+    auto optional{future.Get()};
     if (!optional.has_value()) {
       break;
     }
@@ -195,7 +195,7 @@ void CreateVector(wheels::Future<int> future,
 int main() {
   auto future{wheels::ViaChannel<int, std::vector<int>>(GenerateSequenceValues,
                                                         CreateVector)};
-  auto vector{future.GetOptional().value()};
+  auto vector{future.Get().value()};
   std::cout << vector << std::endl;
 }
 ```

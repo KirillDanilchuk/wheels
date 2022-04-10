@@ -26,7 +26,7 @@ class Future {
     channel_->Close();
   }
 
-  std::optional<T> GetOptional() {
+  std::optional<T> Get() {
     std::unique_lock lock{channel_->mutex_};
     while (!channel_->value_.has_value() && !channel_->is_close_) {
       channel_->value_ready_or_close_.wait(lock);
