@@ -24,4 +24,12 @@ std::string MakeRandomString(size_t size) {
                                           std::numeric_limits<char>::max());
 }
 
+double GetProbability() {
+  return static_cast<double>(wheels::GetRandomValue()) / std::numeric_limits<int>::max();
+}
+
+bool TossCoin(double eagle_probability) {
+  return GetProbability() < eagle_probability;
+}
+
 }

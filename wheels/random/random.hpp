@@ -39,4 +39,8 @@ Container MakeRandomContainer(size_t size, int left = 0,
 
 std::string MakeRandomString(size_t size);
 
+double GetProbability();
+
+bool TossCoin(double eagle_probability);
+
 }
