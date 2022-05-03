@@ -1,0 +1,56 @@
+//
+// Created by Kirill Danilchuk <kirill.danilchuk01@gmail.com> on 25/04/2022.
+//
+
+#include "test_framework.hpp"
+#include <wheels/test/fail_handler.hpp>
+#include <wheels/test/success_handler.hpp>
+#include <wheels/support/singleton.hpp>
+
+namespace {
+
+
+
+std::string GetTestFullPath(const wheels::ITestPtr& test) {
+  return test->SuiteName() + "::" + test->Name();
+}
+
+std::string MakeSuccessMessage(const wheels::ITestPtr& test) {
+  return GetTestFullPath(test);
+}
+
+
+struct AbortOnFailHandler : wheels::ITestFailHandler {
+  void Fail(std::string_view message) override {
+    std::cout << wheels::GetCurrentTest()->Name() << std::endl;
+    std::cout << message << std::endl;
+    std::abort();
+  }
+};
+
+struct SuccessHandler : wheels::ITestSuccessHandler {
+  void Success(std::string_view message) override {
+    std::cout << message << std::endl;
+  }
+};
+
+}
+
+void Fail(const char* file, int line) {
+  const auto kErrorMessage = std::string(file) + " " + std::to_string(line);
+  wheels::GetTestFailHandler()->Fail(kErrorMessage);
+}
+
+void AllTestPassed() {
+  std::cout << "ALL TESTS PASSED" << std::endl;
+}
+
+void RunTests(const wheels::TestList& tests) {
+  wheels::SetTestSuccessHandler(std::make_shared<SuccessHandler>());
+  wheels::SetTestFailHandler(std::make_shared<AbortOnFailHandler>());
+  for (auto&& test : tests) {
+    wheels::SetCurrentTest(test);
+    test->Run();
+    wheels::GetTestSuccessHandler()->Success(MakeSuccessMessage(test));
+  }
+}
