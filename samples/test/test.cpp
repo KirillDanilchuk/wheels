@@ -2,7 +2,7 @@
 // Created by Kirill Danilchuk <kirill.danilchuk01@gmail.com> on 03/05/2022.
 //
 
-#include <wheels/test/test.hpp>
+#include "wheels/test/test_framework.hpp"
 
 TEST_SUITE(JustSuite) {
   TEST(JustTest) {
