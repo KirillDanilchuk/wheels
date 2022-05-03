@@ -9,36 +9,26 @@
 
 namespace {
 
-
-
-std::string GetTestFullPath(const wheels::ITestPtr& test) {
-  return test->SuiteName() + "::" + test->Name();
-}
-
-std::string MakeSuccessMessage(const wheels::ITestPtr& test) {
-  return GetTestFullPath(test);
-}
-
-
 struct AbortOnFailHandler : wheels::ITestFailHandler {
-  void Fail(std::string_view message) override {
+  void Fail(wheels::ITestPtr test, std::string_view error) override {
     std::cout << wheels::GetCurrentTest()->Name() << std::endl;
-    std::cout << message << std::endl;
+    if (!error.empty()) {
+      std::cout << error << std::endl;
+    }
     std::abort();
   }
 };
 
 struct SuccessHandler : wheels::ITestSuccessHandler {
-  void Success(std::string_view message) override {
-    std::cout << message << std::endl;
+  void Success(wheels::ITestPtr test) override {
+    std::cout << test->SuiteName() << ":" << test->Name() << std::endl;
   }
 };
 
 }
 
 void Fail(const char* file, int line) {
-  const auto kErrorMessage = std::string(file) + " " + std::to_string(line);
-  wheels::GetTestFailHandler()->Fail(kErrorMessage);
+  wheels::GetTestFailHandler()->Fail(wheels::GetCurrentTest(), /*error=*/"");
 }
 
 void AllTestPassed() {
@@ -51,6 +41,6 @@ void RunTests(const wheels::TestList& tests) {
   for (auto&& test : tests) {
     wheels::SetCurrentTest(test);
     test->Run();
-    wheels::GetTestSuccessHandler()->Success(MakeSuccessMessage(test));
+    wheels::GetTestSuccessHandler()->Success(test);
   }
 }

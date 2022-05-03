@@ -6,11 +6,12 @@
 
 #include <memory>
 #include <string_view>
+#include <wheels/test/test.hpp>
 
 namespace wheels {
 
 struct ITestSuccessHandler {
-  virtual void Success(std::string_view message) = 0;
+  virtual void Success(ITestPtr test) = 0;
   virtual ~ITestSuccessHandler() = default;
 };
 
