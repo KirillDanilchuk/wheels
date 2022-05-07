@@ -3,7 +3,7 @@
 //
 
 #include <iostream>
-#include <wheels/support/SourceLocation.hpp>
+#include <wheels/support/source_location.hpp>
 
 namespace wheels {
 

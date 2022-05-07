@@ -2,9 +2,9 @@
 // Created by Kirill Danilchuk <kirill.danilchuk01@gmail.com> on 06/12/2021.
 //
 
-#include <wheels/io/ConsoleReader.hpp>
-#include <wheels/io/ConsoleWriter.hpp>
-#include <wheels/memory/MemoryViewOf.hpp>
+#include <wheels/io/console_reader.hpp>
+#include <wheels/io/console_writer.hpp>
+#include <wheels/memory/memory_view_of.hpp>
 
 int main() {
   wheels::ConsoleReader reader;

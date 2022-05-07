@@ -2,8 +2,8 @@
 // Created by Kirill Danilchuk <kirill.danilchuk01@gmail.com> on 20/11/2021.
 //
 
-#include <wheels/support/SourceLocation.hpp>
-#include <wheels/support/StringBuiler.hpp>
+#include <wheels/support/source_location.hpp>
+#include <wheels/support/string_builer.hpp>
 
 namespace wheels::detail {
 void Panic(SourceLocation where, const std::string& error);

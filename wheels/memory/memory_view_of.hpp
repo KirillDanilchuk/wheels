@@ -6,7 +6,7 @@
 
 #include <vector>
 #include <string>
-#include <wheels/memory/MemoryView.hpp>
+#include <wheels/memory/memory_view.hpp>
 
 inline MemoryView MemoryViewOf(std::vector<char>& v) {
   return MemoryView{v.data(), v.size()};

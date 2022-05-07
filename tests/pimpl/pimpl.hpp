@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <wheels/support/Pimpl.hpp>
+#include <wheels/support/pimpl.hpp>
 
 class SecretClass;
 

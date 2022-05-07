@@ -9,7 +9,7 @@
 #include <wheels/test/test_logger.hpp>
 #include <wheels/io/io.hpp>
 #include <wheels/random/random.hpp>
-#include <wheels/time/Timer.hpp>
+#include <wheels/time/timer.hpp>
 #include <vector>
 
 using namespace wheels;

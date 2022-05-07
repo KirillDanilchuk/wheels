@@ -4,10 +4,11 @@
 
 #pragma once
 
-#include <wheels/memory/MemoryView.hpp>
-#include <wheels/result/Result.hpp>
+#include <wheels/memory/memory_view.hpp>
+#include <wheels/result/result.hpp>
 
 namespace wheels {
+
 class IWriter {
  public:
   virtual Result<size_t> Write(const std::string& view) = 0;

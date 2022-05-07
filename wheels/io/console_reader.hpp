@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <wheels/io/IReader.hpp>
+#include <wheels/io/reader.hpp>
 #include <wheels/io/input.hpp>
 #include <string>
 

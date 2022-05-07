@@ -5,7 +5,7 @@
 #include <wheels/concurrency/channel.hpp>
 #include <wheels/io/pretty_std.hpp>
 #include <vector>
-#include <wheels/time/Timer.hpp>
+#include <wheels/time/timer.hpp>
 #include <iostream>
 
 void GenerateSequenceValues(wheels::Promise<int> promise) {

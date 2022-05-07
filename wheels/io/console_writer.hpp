@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <wheels/io/IWriter.hpp>
+#include <wheels/io/writer.hpp>
 #include <wheels/io/output.hpp>
 
 namespace wheels {
