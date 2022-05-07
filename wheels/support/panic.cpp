@@ -6,8 +6,10 @@
 #include <iostream>
 
 namespace wheels::detail {
+
 void Panic(SourceLocation where, const std::string& error) {
   std::cerr << "Panicked at " << where << ": " << error << std::endl;
   std::abort();
 }
+
 }

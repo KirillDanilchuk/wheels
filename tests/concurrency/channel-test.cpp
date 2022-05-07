@@ -34,7 +34,7 @@ TEST_SUITE(Channel) {
       };
       auto vector{future.Get().value()};
       for (size_t i = 0; i < vector.size(); ++i) {
-        ASSERT_EQ(vector[i], i);
+        ASSERT_EQ(vector[i], static_cast<int>(i));
       }
     }
 }

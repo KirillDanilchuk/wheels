@@ -4,13 +4,17 @@
 
 #pragma once
 #include <type_traits>
+#include <utility>
 #include <new>
+#include <cstddef>
 
 namespace wheels {
 
 template <typename T, size_t kSize, size_t kAlignment>
 class Pimpl {
  public:
+  using ValueType = T;
+
   template <typename... Args>
   explicit Pimpl(Args&& ... args) {
     Validate<sizeof(T), alignof(T)>();
@@ -25,12 +29,12 @@ class Pimpl {
     new(Ptr()) T(*rhs);
   }
 
-  Pimpl& operator=(const Pimpl& rhs) noexcept((*Ptr() = *rhs)) {
+  Pimpl& operator=(const Pimpl& rhs) noexcept((*Ptr() = std::declval<ValueType>())) {
     *Ptr() = *rhs;
     return *this;
   }
 
-  Pimpl& operator=(Pimpl&& rhs) noexcept((*Ptr() = std::move(*rhs))) {
+  Pimpl& operator=(Pimpl&& rhs) noexcept((*Ptr() = std::move(std::declval<ValueType>()))) {
     *Ptr() = std::move(*rhs);
     return *this;
   }
