@@ -39,7 +39,7 @@ TEST_SUITE(Assert) {
     ASSERT_GREAT_OR_EQ(2, 2);
   }
 
-  TEST(WithMessage) {
+  TEST(LongTime) {
     ASSERT_EQ(1, 1);
     std::this_thread::sleep_for(std::chrono::milliseconds(10));
   }
