@@ -8,3 +8,4 @@
 #include <wheels/io/output.hpp>
 #include <wheels/io/input.hpp>
 #include <wheels/io/PrinterWithDelimiter.hpp>
+#include <wheels/io/color.hpp>

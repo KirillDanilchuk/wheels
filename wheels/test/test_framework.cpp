@@ -7,7 +7,6 @@
 #include <wheels/test/fail_handler.hpp>
 #include <wheels/test/success_handler.hpp>
 #include <wheels/test/test_logger.hpp>
-#include <wheels/io/color.hpp>
 #include <wheels/io/io.hpp>
 #include <wheels/random/random.hpp>
 #include <wheels/time/Timer.hpp>
