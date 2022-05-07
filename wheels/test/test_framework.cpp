@@ -7,6 +7,7 @@
 #include <wheels/test/fail_handler.hpp>
 #include <wheels/test/success_handler.hpp>
 #include <wheels/test/test_logger.hpp>
+#include <wheels/io/color.hpp>
 
 using namespace wheels;
 
@@ -27,13 +28,13 @@ struct DefaultFormatter : ITestFormatter {
 
 struct SuccessFormatter : DefaultFormatter {
   std::string MakeMessage(ITestPtr test, const std::string& message) override {
-    return "Success: " + DefaultFormatter::MakeMessage(test, message);
+    return WHEELS_GREEN("Success: ") + DefaultFormatter::MakeMessage(test, message);
   }
 };
 
 struct ErrorFormatter : DefaultFormatter {
   std::string MakeMessage(ITestPtr test, const std::string& message) override {
-    return "Error: " + DefaultFormatter::MakeMessage(test, message);
+    return WHEELS_RED("Error: ") + DefaultFormatter::MakeMessage(test, message);
   }
 };
 
