@@ -11,7 +11,7 @@
 namespace wheels {
 
 struct ITestFailHandler {
-  virtual void Fail(wheels::ITestPtr test, std::string_view error) = 0;
+  virtual void Fail(wheels::ITestPtr test, const std::string& error) = 0;
   virtual ~ITestFailHandler() = default;
 };
 
