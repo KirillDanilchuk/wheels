@@ -25,6 +25,18 @@ struct DefaultFormatter : ITestFormatter {
   }
 };
 
+struct SuccessFormatter : DefaultFormatter {
+  std::string MakeMessage(ITestPtr test, const std::string& message) override {
+    return "Success: " + DefaultFormatter::MakeMessage(test, message);
+  }
+};
+
+struct ErrorFormatter : DefaultFormatter {
+  std::string MakeMessage(ITestPtr test, const std::string& message) override {
+    return "Error: " + DefaultFormatter::MakeMessage(test, message);
+  }
+};
+
 struct ConsoleLogger : ITestLogger {
   void Log(const std::string& message) override {
     std::cout << message << std::endl;
@@ -71,11 +83,11 @@ void detail::AllTestPassed() {
 
 void detail::RunTests(const wheels::TestList& tests) {
   wheels::SetTestSuccessHandler(std::make_shared<SuccessHandler>());
-  wheels::SetTestSuccessFormatter(std::make_shared<DefaultFormatter>());
+  wheels::SetTestSuccessFormatter(std::make_shared<SuccessFormatter>());
   wheels::SetTestSuccessLogger(std::make_shared<ConsoleLogger>());
 
   wheels::SetTestFailHandler(std::make_shared<AbortOnFailHandler>());
-  wheels::SetTestErrorFormatter(std::make_shared<DefaultFormatter>());
+  wheels::SetTestErrorFormatter(std::make_shared<ErrorFormatter>());
   wheels::SetTestErrorLogger(std::make_shared<ConsoleLogger>());
 
   for (auto&& test : tests) {
