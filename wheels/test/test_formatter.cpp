@@ -11,7 +11,7 @@ namespace {
   ITestFormatterPtr current_success_formatter;
 }
 
-void SetErrorFormatter(ITestFormatterPtr formatter) {
+void SetTestErrorFormatter(ITestFormatterPtr formatter) {
   current_error_formatter = std::move(formatter);
 }
 
@@ -19,7 +19,7 @@ ITestFormatterPtr GetErrorFormatter() {
   return current_error_formatter;
 }
 
-void SetSuccessFormatter(ITestFormatterPtr formatter) {
+void SetTestSuccessFormatter(ITestFormatterPtr formatter) {
   current_success_formatter = std::move(formatter);
 }
 

@@ -11,14 +11,15 @@ namespace wheels {
 
 struct ITestFormatter {
   virtual std::string MakeMessage(ITestPtr test, const std::string& extra) = 0;
+  virtual ~ITestFormatter() = default;
 };
 
 using ITestFormatterPtr = std::shared_ptr<ITestFormatter>;
 
-void SetErrorFormatter(ITestFormatterPtr formatter);
+void SetTestErrorFormatter(ITestFormatterPtr formatter);
 ITestFormatterPtr GetErrorFormatter();
 
-void SetSuccessFormatter(ITestFormatterPtr formatter);
+void SetTestSuccessFormatter(ITestFormatterPtr formatter);
 ITestFormatterPtr GetSuccessFormatter();
 
 }

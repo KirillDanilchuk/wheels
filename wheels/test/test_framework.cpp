@@ -3,41 +3,81 @@
 //
 
 #include "test_framework.hpp"
+#include "test_formatter.hpp"
 #include <wheels/test/fail_handler.hpp>
 #include <wheels/test/success_handler.hpp>
-#include <wheels/support/singleton.hpp>
+#include <wheels/test/test_logger.hpp>
+
+using namespace wheels;
 
 namespace {
 
-struct AbortOnFailHandler : wheels::ITestFailHandler {
-  void Fail(wheels::ITestPtr test, std::string_view error) override {
-    std::cout << wheels::GetCurrentTest()->Name() << std::endl;
-    if (!error.empty()) {
-      std::cout << error << std::endl;
+struct DefaultFormatter : ITestFormatter {
+  std::string MakeMessage(ITestPtr test,
+                         const std::string& message) override {
+    std::string result;
+    result += test->SuiteName() += "::";
+    result += test->Name();
+    if (!message.empty()) {
+      result += " | " + message;
     }
-    std::abort();
+    return result;
+  }
+};
+
+struct ConsoleLogger : ITestLogger {
+  void Log(const std::string& message) override {
+    std::cout << message << std::endl;
+  }
+};
+
+std::string GetErrorMessage(const wheels::ITestPtr& test,
+                            const std::string& extra_message) {
+  return GetErrorFormatter()->MakeMessage(test, extra_message);
+}
+
+void LogError(const std::string& message) {
+  GetErrorLogger()->Log(message);
+}
+
+void StopProgram() {
+  std::abort();
+}
+
+struct AbortOnFailHandler : wheels::ITestFailHandler {
+  void Fail(wheels::ITestPtr test, const std::string& error) override {
+    const auto message{GetErrorMessage(test, error)};
+    LogError(message);
+    StopProgram();
   }
 };
 
 struct SuccessHandler : wheels::ITestSuccessHandler {
   void Success(wheels::ITestPtr test) override {
-    std::cout << test->SuiteName() << ":" << test->Name() << std::endl;
+    const auto message{wheels::GetSuccessFormatter()->MakeMessage(test, "")};
+    wheels::GetSuccessLogger()->Log(message);
   }
 };
 
 }
 
-void Fail(const char* file, int line) {
+void detail::Fail(const char* file, int line) {
   wheels::GetTestFailHandler()->Fail(wheels::GetCurrentTest(), /*error=*/"");
 }
 
-void AllTestPassed() {
+void detail::AllTestPassed() {
   std::cout << "ALL TESTS PASSED" << std::endl;
 }
 
-void RunTests(const wheels::TestList& tests) {
+void detail::RunTests(const wheels::TestList& tests) {
   wheels::SetTestSuccessHandler(std::make_shared<SuccessHandler>());
+  wheels::SetTestSuccessFormatter(std::make_shared<DefaultFormatter>());
+  wheels::SetTestSuccessLogger(std::make_shared<ConsoleLogger>());
+
   wheels::SetTestFailHandler(std::make_shared<AbortOnFailHandler>());
+  wheels::SetTestErrorFormatter(std::make_shared<DefaultFormatter>());
+  wheels::SetTestErrorLogger(std::make_shared<ConsoleLogger>());
+
   for (auto&& test : tests) {
     wheels::SetCurrentTest(test);
     test->Run();

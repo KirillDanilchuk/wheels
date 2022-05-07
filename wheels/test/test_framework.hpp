@@ -10,9 +10,11 @@
 
 #include <wheels/test/test.hpp>
 
-void RunTests(const wheels::TestList& tests);
-void AllTestPassed();
-void Fail(const char* file, int line);
+namespace detail {
+  void RunTests(const wheels::TestList& tests);
+  void AllTestPassed();
+  void Fail(const char* file, int line);
+}
 
 #define TEST_SUITE(suite)                 \
 namespace test_suite_##suite {            \
@@ -52,10 +54,18 @@ void TestRoutine##name()
 #define RUN_ALL_TESTS()                 \
 int main() {                            \
   auto& tests = wheels::GetAllTests();  \
-  RunTests(tests);                      \
-  AllTestPassed();                      \
+  detail::RunTests(tests);              \
+  detail::AllTestPassed();              \
 }                                       \
 [[maybe_unused]] static int request_semicolon_global_value_dont_use_it
 
 #define ASSERT_TRUE(condition) \
-REQUEST_SEMICOLON(if (!(condition)) { Fail(__FILE__, __LINE__); })
+REQUEST_SEMICOLON(if (!(condition)) { detail::Fail(__FILE__, __LINE__); })
+
+#define ASSERT_FALSE(condition) ASSERT_TRUE(!(condition))
+#define ASSERT_EQ(lhs, rhs) ASSERT_TRUE((lhs) == (rhs))
+#define ASSERT_NOT_EQ(lhs, rhs) ASSERT_TRUE((lhs) != (rhs))
+#define ASSERT_LESS(lhs, rhs) ASSERT_TRUE((lhs) < (rhs))
+#define ASSERT_LESS_OR_EQ(lhs, rhs) ASSERT_TRUE((lhs) <= (rhs))
+#define ASSERT_GREAT(lhs, rhs) ASSERT_TRUE((lhs) > (rhs))
+#define ASSERT_GREAT_OR_EQ(lhs, rhs) ASSERT_TRUE((lhs) >= (rhs))
