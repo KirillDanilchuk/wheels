@@ -7,6 +7,8 @@ Core C++ components
 - [Integration](#integration)
 
 ## Components
+### Look at code for more detail information =)
+
 ### [IO](wheels/io) (input/output)
 
 Input/output component to simplify the work with the console
