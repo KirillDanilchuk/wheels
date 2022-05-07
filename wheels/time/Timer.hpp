@@ -25,4 +25,12 @@ class Timer {
   std::chrono::steady_clock::time_point begin_;
 };
 
+template <typename F, typename TimeType = std::chrono::milliseconds>
+requires requires(F f) { f(); }
+size_t RunWithTimer(F function) {
+  wheels::Timer<TimeType> timer;
+  function();
+  return timer.Elapsed();
+}
+
 }
