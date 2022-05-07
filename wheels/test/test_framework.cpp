@@ -38,7 +38,8 @@ struct SuccessFormatter : DefaultFormatter {
 
 struct ErrorFormatter : DefaultFormatter {
   std::string MakeMessage(ITestPtr test, const std::string& message) override {
-    return WHEELS_RED("ERROR: ") + DefaultFormatter::MakeMessage(test, message);
+    auto suffix{WHEELS_RED("ERROR: ")};
+    return suffix + DefaultFormatter::MakeMessage(test, message);
   }
 };
 
