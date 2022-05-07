@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(test_sample)
+project(failure_test_sample)
 
 file(GLOB SOURCES *.cpp)
 
