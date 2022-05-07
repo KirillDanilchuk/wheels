@@ -29,12 +29,14 @@ class Pimpl {
     new(Ptr()) T(*rhs);
   }
 
-  Pimpl& operator=(const Pimpl& rhs) noexcept((*Ptr() = std::declval<ValueType>())) {
+  Pimpl& operator=(const Pimpl& rhs)
+      noexcept((*Ptr() = std::declval<ValueType>())) {
     *Ptr() = *rhs;
     return *this;
   }
 
-  Pimpl& operator=(Pimpl&& rhs) noexcept((*Ptr() = std::move(std::declval<ValueType>()))) {
+  Pimpl& operator=(Pimpl&& rhs)
+      noexcept((*Ptr() = std::move(std::declval<ValueType>()))) {
     *Ptr() = std::move(*rhs);
     return *this;
   }
