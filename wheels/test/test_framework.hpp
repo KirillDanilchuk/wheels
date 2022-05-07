@@ -11,6 +11,7 @@
 #include <wheels/test/test.hpp>
 
 namespace detail {
+  void ConfigurateTestFramework();
   void RunTests(const wheels::TestList& tests);
   void AllTestPassed();
   void Fail(const char* file, int line);
@@ -54,6 +55,7 @@ void TestRoutine##name()
 #define RUN_ALL_TESTS()                 \
 int main() {                            \
   auto& tests = wheels::GetAllTests();  \
+  detail::ConfigurateTestFramework();   \
   detail::RunTests(tests);              \
   detail::AllTestPassed();              \
 }                                       \

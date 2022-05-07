@@ -81,7 +81,7 @@ void detail::AllTestPassed() {
   std::cout << "ALL TESTS PASSED" << std::endl;
 }
 
-void detail::RunTests(const wheels::TestList& tests) {
+void detail::ConfigurateTestFramework() {
   wheels::SetTestSuccessHandler(std::make_shared<SuccessHandler>());
   wheels::SetTestSuccessFormatter(std::make_shared<SuccessFormatter>());
   wheels::SetTestSuccessLogger(std::make_shared<ConsoleLogger>());
@@ -89,7 +89,9 @@ void detail::RunTests(const wheels::TestList& tests) {
   wheels::SetTestFailHandler(std::make_shared<AbortOnFailHandler>());
   wheels::SetTestErrorFormatter(std::make_shared<ErrorFormatter>());
   wheels::SetTestErrorLogger(std::make_shared<ConsoleLogger>());
+}
 
+void detail::RunTests(const wheels::TestList& tests) {
   for (auto&& test : tests) {
     wheels::SetCurrentTest(test);
     test->Run();
