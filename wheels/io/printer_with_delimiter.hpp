@@ -64,4 +64,5 @@ class PrinterWithDelimiter {
   std::string right_border_;
   bool is_first_print_{true};
 };
+
 }
