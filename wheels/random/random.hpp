@@ -53,7 +53,7 @@ std::string MakeRandomString(size_t size);
 
 double GetProbability();
 
-bool TossCoin(double eagle_probability);
+bool TossCoin(double eagle_probability = 0.5);
 
 template <detail::Array A>
 const typename A::value_type& GetRandomValue(const A& array) {
