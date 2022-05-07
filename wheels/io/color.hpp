@@ -9,12 +9,10 @@
 namespace wheels {
 
 std::string GreenASCI();
-
 std::string RedASCI();
-
 std::string Reset();
 
-}
+} // namespace wheels
 
 #define WHEELS_GREEN(message) \
   wheels::GreenASCI() + (message) + wheels::Reset()
