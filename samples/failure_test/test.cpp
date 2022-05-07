@@ -3,6 +3,7 @@
 //
 
 #include "wheels/test/test_framework.hpp"
+#include <thread>
 
 TEST_SUITE(JustSuite) {
   TEST(JustTest) {
@@ -40,6 +41,7 @@ TEST_SUITE(Assert) {
 
   TEST(WithMessage) {
     ASSERT_EQ(1, 1);
+    std::this_thread::sleep_for(std::chrono::milliseconds(10));
   }
 
   TEST(Failure) {

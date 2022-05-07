@@ -10,6 +10,7 @@
 #include <wheels/io/color.hpp>
 #include <wheels/io/io.hpp>
 #include <wheels/random/random.hpp>
+#include <wheels/time/Timer.hpp>
 #include <vector>
 
 using namespace wheels;
@@ -83,8 +84,9 @@ struct AbortOnFailHandler : wheels::ITestFailHandler {
 };
 
 struct SuccessHandler : wheels::ITestSuccessHandler {
-  void Success(wheels::ITestPtr test) override {
-    const auto message{wheels::GetSuccessFormatter()->MakeMessage(test, "")};
+  void Success(wheels::ITestPtr test, size_t milliseconds_duration) override {
+    std::string time = std::to_string(milliseconds_duration) + "ms";
+    const auto message{wheels::GetSuccessFormatter()->MakeMessage(test, time)};
     wheels::GetSuccessLogger()->Log(message);
   }
 };
@@ -121,7 +123,10 @@ void detail::ConfigurateTestFramework() {
 void detail::RunTests(const wheels::TestList& tests) {
   for (auto&& test : tests) {
     wheels::SetCurrentTest(test);
-    test->Run();
-    wheels::GetTestSuccessHandler()->Success(test);
+    wheels::Timer test_timer;
+    const auto test_duration = wheels::RunWithTimer([test]() {
+      test->Run();
+    });
+    wheels::GetTestSuccessHandler()->Success(test, test_duration);
   }
 }

@@ -11,7 +11,7 @@
 namespace wheels {
 
 struct ITestSuccessHandler {
-  virtual void Success(ITestPtr test) = 0;
+  virtual void Success(ITestPtr test, size_t millisecond_duration) = 0;
   virtual ~ITestSuccessHandler() = default;
 };
 
