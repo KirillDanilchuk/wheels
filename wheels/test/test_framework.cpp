@@ -8,6 +8,9 @@
 #include <wheels/test/success_handler.hpp>
 #include <wheels/test/test_logger.hpp>
 #include <wheels/io/color.hpp>
+#include <wheels/io/io.hpp>
+#include <wheels/random/random.hpp>
+#include <vector>
 
 using namespace wheels;
 
@@ -28,19 +31,20 @@ struct DefaultFormatter : ITestFormatter {
 
 struct SuccessFormatter : DefaultFormatter {
   std::string MakeMessage(ITestPtr test, const std::string& message) override {
-    return WHEELS_GREEN("Success: ") + DefaultFormatter::MakeMessage(test, message);
+    auto suffix{WHEELS_GREEN("PASSED: ")};
+    return suffix + DefaultFormatter::MakeMessage(test, message);
   }
 };
 
 struct ErrorFormatter : DefaultFormatter {
   std::string MakeMessage(ITestPtr test, const std::string& message) override {
-    return WHEELS_RED("Error: ") + DefaultFormatter::MakeMessage(test, message);
+    return WHEELS_RED("ERROR: ") + DefaultFormatter::MakeMessage(test, message);
   }
 };
 
 struct ConsoleLogger : ITestLogger {
   void Log(const std::string& message) override {
-    std::cout << message << std::endl;
+    wheels::PrintLine(message);
   }
 };
 
@@ -53,6 +57,18 @@ void LogError(const std::string& message) {
   GetErrorLogger()->Log(message);
 }
 
+std::string ChoseAngrySmile() {
+  static const std::vector<std::string> smileys{
+      "( ▀ 益 ▀ )", "ヾ( ･`⌓´･)ﾉﾞ", "ヽ(｀○´)/", "ヾ(*｀⌒´*)ﾉ", "╰༼=ಠਊಠ=༽╯",
+      "ι(｀ロ´)ノ", "(･｀ｪ´･)つ", "ヾ(｀⌒´メ)ノ″", "ヽ༼ ಠ益ಠ ༽ﾉ"
+  };
+  return wheels::GetRandomValue(smileys);
+}
+
+void LogAngrySmile() {
+  GetErrorLogger()->Log(WHEELS_RED(ChoseAngrySmile()));
+}
+
 void StopProgram() {
   std::abort();
 }
@@ -61,6 +77,7 @@ struct AbortOnFailHandler : wheels::ITestFailHandler {
   void Fail(wheels::ITestPtr test, const std::string& error) override {
     const auto message{GetErrorMessage(test, error)};
     LogError(message);
+    LogAngrySmile();
     StopProgram();
   }
 };
@@ -78,8 +95,17 @@ void detail::Fail(const char* file, int line) {
   wheels::GetTestFailHandler()->Fail(wheels::GetCurrentTest(), /*error=*/"");
 }
 
+std::string ChoseRandomHappySmiley() {
+  static const std::vector<std::string> smileys{
+      "(/^▽^)/", "☜(⌒▽⌒)☞", "ヽ(･∀･)ﾉ", "(•‿•)", "⊂(◉‿◉)つ", "{´◕ ◡ ◕｀}",
+      "(☆^ー^☆)", "（＾_＾）", "٩( ᐛ )و"
+  };
+  return wheels::GetRandomValue(smileys);
+}
+
 void detail::AllTestPassed() {
-  std::cout << "ALL TESTS PASSED" << std::endl;
+  auto result_message{"ALL TESTS PASSED " + ChoseRandomHappySmiley()};
+  wheels::PrintLine(WHEELS_GREEN(result_message));
 }
 
 void detail::ConfigurateTestFramework() {
