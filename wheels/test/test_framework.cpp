@@ -120,13 +120,17 @@ void detail::ConfigurateTestFramework() {
   wheels::SetTestErrorLogger(std::make_shared<ConsoleLogger>());
 }
 
+size_t RunWithTimer(const ITestPtr& test) {
+  return wheels::RunWithTimer([test]() {
+    test->Run();
+  });
+}
+
 void detail::RunTests(const wheels::TestList& tests) {
   for (auto&& test : tests) {
     wheels::SetCurrentTest(test);
     wheels::Timer test_timer;
-    const auto test_duration = wheels::RunWithTimer([test]() {
-      test->Run();
-    });
+    const auto test_duration{RunWithTimer(test)};
     wheels::GetTestSuccessHandler()->Success(test, test_duration);
   }
 }
