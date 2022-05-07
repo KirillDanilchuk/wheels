@@ -54,8 +54,8 @@ void TestRoutine##name()
 
 #define RUN_ALL_TESTS()                 \
 int main() {                            \
-  auto& tests = wheels::GetAllTests();  \
   detail::ConfigurateTestFramework();   \
+  auto& tests = wheels::GetAllTests();  \
   detail::RunTests(tests);              \
   detail::AllTestPassed();              \
 }                                       \
