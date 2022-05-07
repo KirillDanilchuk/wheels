@@ -52,7 +52,6 @@ class Result {
 
   Result() = default;
 
-
   bool HasValue() {
     return is_construct_;
   }
@@ -71,6 +70,3 @@ class Result {
   bool is_construct_{false};
   detail::ValueStorage<T> storage_;
 };
-
-
-

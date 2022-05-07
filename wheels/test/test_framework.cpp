@@ -2,8 +2,8 @@
 // Created by Kirill Danilchuk <kirill.danilchuk01@gmail.com> on 25/04/2022.
 //
 
-#include "test_framework.hpp"
-#include "test_formatter.hpp"
+#include <wheels/test/test_framework.hpp>
+#include <wheels/test/test_formatter.hpp>
 #include <wheels/test/fail_handler.hpp>
 #include <wheels/test/success_handler.hpp>
 #include <wheels/test/test_logger.hpp>
@@ -129,7 +129,6 @@ size_t RunWithTimer(const ITestPtr& test) {
 void detail::RunTests(const wheels::TestList& tests) {
   for (auto&& test : tests) {
     wheels::SetCurrentTest(test);
-    wheels::Timer test_timer;
     const auto test_duration{RunWithTimer(test)};
     wheels::GetTestSuccessHandler()->Success(test, test_duration);
   }
