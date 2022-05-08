@@ -10,18 +10,14 @@
 #define WHEELS_ASSERT(condition, error)                                     \
 do {                                                                        \
   if (!(condition)) {                                                       \
-    WHEELS_PANIC("Assertion \'" << #condition << "\' failed: " << error);     \
+    WHEELS_PANIC("Assertion \'" << #condition << "\' failed: " << error);   \
   }                                                                         \
 } while (false)
 
 #else
 
 #define WHEELS_ASSERT(condition, error) \
-do {                                    \
-  if (false) {                          \
-    bool ignore = condition;            \
-    WHEELS_UNUSED(ignore);              \
-  }                                     \
-} while (false)
+WHEELS_UNUSED(condition);               \
+WHEELS_UNUSED(error)
 
 #endif
