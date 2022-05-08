@@ -45,7 +45,7 @@ class MemoryView {
     return !Empty();
   }
 
-  memory_view& operator+=(size_t offset) noexcept {
+  MemoryView& operator+=(size_t offset) noexcept {
     WHEELS_ASSERT(offset <= size_, "Out of bounds");
     begin_ += offset;
     size_ -= offset;
