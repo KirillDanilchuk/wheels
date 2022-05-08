@@ -7,9 +7,14 @@
 
 TEST_SUITE(Defer) {
   TEST(JustWork) {
-    wheels::Defer defer([]() {
-      ASSERT_TRUE(true);
-    });
+    bool deferred{false};
+    {
+      wheels::Defer defer([&deferred]() {
+        deferred = true;
+      });
+      ASSERT_FALSE(deferred);
+    }
+    ASSERT_TRUE(deferred);
   }
 
   TEST(TrueDefer) {
