@@ -8,18 +8,6 @@
 #include <random>
 #include <string>
 
-namespace detail {
-
-template <typename T>
-concept Array = requires(T c) {
-  c[0];
-  { c[0] } -> std::convertible_to<typename T::value_type>;
-  c[0] = std::declval<typename T::value_type>();
-  { c.size() } -> std::convertible_to<std::size_t>;
-};
-
-}
-
 namespace wheels {
 
 std::mt19937& GetCurrentGenerator();
@@ -55,7 +43,7 @@ double GetProbability();
 
 bool TossCoin(double eagle_probability = 0.5);
 
-template <detail::Array A>
+template <typename A>
 const typename A::value_type& GetRandomValue(const A& array) {
   int random_index{wheels::GetRandomValue(0, array.size() - 1)};
   return array[random_index];
